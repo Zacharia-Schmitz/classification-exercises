@@ -5,3 +5,5 @@ __pycache__
 .vscode/env.py
 robinson-ds-content
 *.csv
+*.xlsx
+acquire_test.ipynb
