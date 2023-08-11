@@ -6,4 +6,5 @@ __pycache__
 robinson-ds-content
 *.csv
 *.xlsx
-acquire_test.ipynb
+test.ipynb
+test.py
