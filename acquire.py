@@ -3,7 +3,7 @@ import pandas as pd
 import os
 
 
-def grab_sql(db, table, filename):
+def grab_sql(db, table, filename, query=None):
     """
     grab sql will grab data from codeups mysql server utilizing db_url
     with credentials from a personal env file. It will check if filename file exists.
@@ -14,10 +14,12 @@ def grab_sql(db, table, filename):
     arguments: db is the database
                table is the table within that database
                filename is what the file will be named
+               query is the SQL query to execute (default is "SELECT * FROM <table>")
 
     return: a pandas dataframe
     """
-    query = "SELECT * FROM " + table + ";"
+    if query is None:
+        query = f"SELECT * FROM {table};"
     connection = db_url(db)
     df = pd.read_sql(query, connection)
     df.to_csv(filename, index=False)
@@ -56,7 +58,7 @@ def get_titanic_data():
 # Obtain your data from the Codeup Data Science Database.
 
 
-def get_iris():
+def get_iris_data():
     """
     get iris will query the iris database and return all the data within
 
@@ -116,3 +118,6 @@ def get_telco_data():
 # To do this, edit the beginning of the function to check for the local filename of telco.csv, titanic.csv, or iris.csv.
 # If they exist, use the .csv file. If the file doesn't exist, then produce the SQL and pandas necessary to create a dataframe,
 # then write the dataframe to a .csv file with the appropriate name.
+
+
+###
