@@ -1,7 +1,7 @@
 from env import db_url
 import pandas as pd
 import os
-
+from sklearn.model_selection import train_test_split
 import pandas as pd
 
 
@@ -162,3 +162,23 @@ def get_titanic_data():
         df = pd.read_sql(query, connection)
         df.to_csv(filename, index=False)
     return df
+
+
+def split_data(df, target):
+    """
+    take in a DataFrame and return train, validate, and test DataFrames; stratify on a specified variable.
+    return train, validate, test DataFrames.
+    """
+    train_validate, test = train_test_split(
+        df, test_size=0.2, random_state=123, stratify=df[target]
+    )
+    train, validate = train_test_split(
+        train_validate, test_size=0.3, random_state=123, stratify=train_validate[target]
+    )
+    print(f"train: {len(train)} ({round(len(train)/len(df), 2)*100}% of {len(df)})")
+    print(
+        f"validate: {len(validate)} ({round(len(validate)/len(df), 2)*100}% of {len(df)})"
+    )
+    print(f"test: {len(test)} ({round(len(test)/len(df), 2)*100}% of {len(df)})")
+
+    return train, validate, test
